@@ -16,3 +16,16 @@ resource "azurerm_resource_group" "classicrecap" {
   name     = "classicpipeline"
   location = "West US"
 }
+
+resource "azurerm_storage_account" "classicstg" {
+  name                     = "classstg1"
+  resource_group_name      = "classicpipeline"
+  location                 = "West US"
+  account_tier             = "Standard"
+  account_replication_type = "GRS"
+}
+resource "azurerm_storage_container" "classiccont" {
+  name                  = "classiccont1"
+  storage_account_id    = azurerm_storage_account.classicstg.id
+  container_access_type = "private"
+}
